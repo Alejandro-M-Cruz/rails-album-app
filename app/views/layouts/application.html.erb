@@ -14,8 +14,12 @@
     <header class="p-3 text-bg-dark">
       <%= render 'shared/navbar' %>
     </header>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <% if notice %>
+      <%= render 'shared/notice' %>
+    <% end %>
+    <% if alert %>
+      <%= render 'shared/alert' %>
+    <% end %>
     <main>
       <%= yield %>
     </main>

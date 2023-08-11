@@ -1,0 +1,44 @@
+<%=
+  form_for(
+    resource,
+    as: resource_name,
+    url: registration_path(resource_name),
+    html: {class: 'card mx-auto my-5 col-11 col-lg-6'}
+  ) do |form|
+%>
+  <div class="card-header">
+    <h2 class="card-title text-center">Sign in</h2>
+  </div>
+
+  <div class="card-body">
+    <div class="mb-3">
+      <%= form.label :email %>
+      <%= form.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control mt-2' %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :password %>
+      <% if @minimum_password_length %>
+        <em>(<%= @minimum_password_length %> characters minimum)</em>
+      <% end %>
+      <%= form.password_field :password, autocomplete: "new-password", class: 'form-control mt-2' %>
+    </div>
+
+    <div>
+      <%= form.label :password_confirmation %>
+      <%= form.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control mt-2 mb-3' %>
+    </div>
+
+    <%= render "devise/shared/error_messages", resource: resource %>
+  </div>
+
+  <div class="card-footer d-flex flex-column gap-3 align-items-center">
+    <%= render "devise/shared/links" %>
+    <div class="d-flex justify-content-center gap-1 gap-sm-5">
+      <%= link_to 'Cancel', root_path, class: 'btn btn-outline-danger' %>
+      <%= form.submit "Sign up", class: 'btn btn-primary' %>
+    </div>
+  </div>
+<% end %>
+
+
