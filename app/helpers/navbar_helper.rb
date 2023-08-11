@@ -3,7 +3,7 @@ module NavbarHelper
   def navbar_links
     navbar_links = [
       { name: 'Home', path: root_path },
-      { name: 'New image', path: new_image_path }
+      { name: 'New image', path: new_post_path }
     ]
     navbar_links.map { |link| link_html(link) }.join.html_safe
   end
