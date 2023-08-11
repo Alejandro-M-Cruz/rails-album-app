@@ -1,5 +1,6 @@
 class ImagesController < ApplicationController
   before_action :set_image, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, except: %i[ index show ]
 
   # GET /images or /images.json
   def index
