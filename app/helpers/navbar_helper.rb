@@ -2,7 +2,8 @@ module NavbarHelper
 
   def navbar_links
     navbar_links = [
-      { name: 'Home', path: root_path },
+      { name: 'Posts', path: posts_path },
+      { name: 'My posts', path: my_posts_path },
       { name: 'New post', path: new_post_path }
     ]
     navbar_links.map { |link| link_html(link) }.join.html_safe
@@ -14,6 +15,6 @@ module NavbarHelper
     end
 
     def link_class(link_path)
-      current_page?(link_path) ? 'nav-link px-2 text-secondary' : 'nav-link px-2 text-white'
+      'nav-link ' + (current_page?(link_path) ? 'text-secondary' : 'text-white')
     end
 end

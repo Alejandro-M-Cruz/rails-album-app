@@ -18,3 +18,12 @@
     color: inherit;
   }
 }
+
+.form-card {
+  @extend .card, .mx-auto, .my-2, .col-11, .col-lg-6;
+}
+
+.post-image {
+  height: 200px;
+  object-fit: cover;
+}

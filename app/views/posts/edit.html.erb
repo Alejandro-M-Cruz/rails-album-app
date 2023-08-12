@@ -1,8 +1,6 @@
-<h1>Editing post</h1>
+<%= render 'shared/link_back', locals: { link_label: 'Back', link_path: @post } %>
 
-<%= render "form", post: @post %>
-
-<br>
+<%= render "form", post: @post, title: 'Editing post' %>
 
 <div>
   <%= link_to "Show this post", @post %> |

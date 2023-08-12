@@ -1,10 +1,13 @@
-<%= link_to post, id: dom_id(post), class: 'card w-25 no-format-link' do %>
-  <%= image_tag post.image, alt: post.description, class: 'card-img-top' %>
-  <div class="card-body">
-    <p class="text-secondary"><%= post.description %></p>
-    <p><%= post.public ? 'Public' : 'Private' %></p>
-  </div>
-  <div class="card-footer">
-    <%= yield %>
-  </div>
-<% end %>
+<div class="col">
+  <%= link_to post, id: dom_id(post), class: 'col card no-format-link h-100 position-relative' do %>
+    <%= image_tag post.image, alt: post.description, height: '200', class: 'card-img-top post-image' %>
+    <div class="card-body">
+      <p class="text-secondary"><%= post.description %></p>
+      <% if current_page? my_posts_path %>
+        <span class="position-absolute end-0 me-1 bottom-0 mb-1 badge <%= post.public ? 'bg-success' : 'bg-primary' %>">
+          <%= post.public ? 'Public' : 'Private' %>
+        </span>
+      <% end %>
+    </div>
+  <% end %>
+</div>
