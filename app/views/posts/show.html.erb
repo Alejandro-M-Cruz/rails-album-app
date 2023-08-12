@@ -1,10 +1,22 @@
-<p style="color: green"><%= notice %></p>
+<%= link_to posts_path, class: 'd-block no-format-link ms-4 mt-4 text-primary' do %>
+  <i class="bi bi-chevron-left"></i> <span class="text-decoration-underline">Back to posts</span>
+<% end %>
 
-<%= render @post %>
+<article class="card col-11 col-md-9 col-lg-7 mx-auto my-3">
+  <%= image_tag @post.image, alt: @post.description, class: 'card-img-top' %>
+  <div class="card-body">
+    <p class="text-secondary"><%= @post.description %></p>
+    <p><%= @post.public ? 'Public' : 'Private' %></p>
+  </div>
 
-<div>
-  <%= link_to "Edit this post", edit_post_path(@post) %> |
-  <%= link_to "Back to posts", posts_path %>
-
-  <%= button_to "Destroy this post", @post, method: :delete %>
-</div>
+  <% if post_belongs_to_current_user? %>
+    <div class="card-footer d-flex justify-content-around align-items-center">
+      <%= link_to edit_post_path(@post), class: 'btn btn-primary' do %>
+        <i class="bi bi-pencil-fill"></i> Edit this post
+      <% end %>
+      <%= button_to @post, method: :delete, class: 'btn btn-danger' do %>
+        <i class="bi bi-trash-fill"></i> Destroy this post
+      <% end %>
+    </div>
+  <% end %>
+</article>

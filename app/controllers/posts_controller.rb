@@ -5,7 +5,7 @@ class PostsController < ApplicationController
 
   # GET /posts or /posts.json
   def index
-    @posts = Post.where(public: true).order(created_at: :desc)
+    @posts = Post.where(public: true).where.not(user_id: current_user.id).order(created_at: :desc)
   end
 
   def my_posts
@@ -76,7 +76,7 @@ class PostsController < ApplicationController
     end
 
     def check_post_owner
-      unless @post.user.eql? current_user
+      unless post_belongs_to_current_user?
         redirect_to root_path, alert: "You don't have permission to do that."
       end
     end

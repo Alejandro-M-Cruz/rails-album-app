@@ -8,3 +8,13 @@
 .button_to {
   display: inline-block;
 }
+
+.no-format-link {
+  text-decoration: none;
+  color: inherit;
+
+  &:hover {
+    text-decoration: none;
+    color: inherit;
+  }
+}
