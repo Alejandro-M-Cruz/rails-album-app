@@ -1,10 +1,20 @@
-<%= render 'shared/link_back', locals: { link_label: 'Back', link_path: @show_page_back_link_path } %>
+<%= render 'shared/link_back', link_label: 'Back', link_path: @show_page_back_link_path %>
 
 <article class="card col-11 col-md-9 col-lg-7 mx-auto my-2">
-  <%= image_tag @post.image, alt: @post.description, class: 'card-img-top' %>
-  <div class="card-body">
-    <p class="text-secondary"><%= @post.description %></p>
-    <p><%= @post.public ? 'Public' : 'Private' %></p>
+  <div class="card-img-top text-center bg-dark">
+    <%= image_tag @post.image, alt: @post.description, class: 'show-post-image rounded-top' %>
+  </div>
+
+  <div class="card-body d-flex flex-column">
+    <p class="text-secondary flex-grow-1"><%= @post.description %></p>
+    <div class="d-flex">
+      <% if post_belongs_to_current_user? %>
+          <span class="badge <%= @post.public ? 'bg-success' : 'bg-primary' %>">
+            <%= @post.public ? 'Public' : 'Private' %>
+          </span>
+      <% end %>
+      <span class="flex-grow-1 text-end fw-semibold"><%= @post.created_at.strftime '%Y-%m-%d %H:%M' %></span>
+    </div>
   </div>
 
   <% if post_belongs_to_current_user? %>

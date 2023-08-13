@@ -1,4 +1,4 @@
-<%= render 'shared/link_back', locals: { link_label: 'Back to log in', link_path: new_user_session_path } %>
+<%= render 'shared/link_back', link_label: 'Back to log in', link_path: new_user_session_path %>
 
 <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: 'form-card' }) do |f| %>
   <div class="card-header">

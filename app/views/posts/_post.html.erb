@@ -1,16 +1,16 @@
-<div class="col">
+<article class="col">
   <%= link_to post, id: dom_id(post), class: 'col card no-format-link h-100 position-relative' do %>
     <%= image_tag post.image, alt: post.description, height: '200', class: 'card-img-top post-image' %>
     <div class="card-body d-flex flex-column">
       <p class="text-secondary flex-grow-1"><%= post.description %></p>
-      <div class="d-flex flex-row justify-content-between">
-        <span><%= post.created_at.strftime '%Y-%m-%d %H:%M' %></span>
+      <div class="d-flex">
         <% if current_page? my_posts_path %>
           <span class="badge <%= post.public ? 'bg-success' : 'bg-primary' %>">
             <%= post.public ? 'Public' : 'Private' %>
           </span>
         <% end %>
+        <span class="flex-grow-1 text-end fw-semibold"><%= post.created_at.strftime '%Y-%m-%d %H:%M' %></span>
       </div>
     </div>
   <% end %>
-</div>
+</article>

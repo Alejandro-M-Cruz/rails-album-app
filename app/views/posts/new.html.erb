@@ -1,5 +1,3 @@
-<%= render "form", post: @post, title: 'New post' %>
+<%= render 'shared/link_back' %>
 
-<div>
-  <%= link_to "Back to posts", posts_path %>
-</div>
+<%= render "form", post: @post, title: 'New post' %>

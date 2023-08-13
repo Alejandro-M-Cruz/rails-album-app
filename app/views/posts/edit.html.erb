@@ -1,8 +1,3 @@
-<%= render 'shared/link_back', locals: { link_label: 'Back', link_path: @post } %>
+<%= render 'shared/link_back', link_label: 'Back to the post', link_path: @post %>
 
 <%= render "form", post: @post, title: 'Editing post' %>
-
-<div>
-  <%= link_to "Show this post", @post %> |
-  <%= link_to "Back to posts", posts_path %>
-</div>
