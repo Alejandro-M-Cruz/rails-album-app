@@ -1,8 +1,12 @@
 <article class="col">
   <%= link_to post, id: dom_id(post), class: 'col card no-format-link h-100 position-relative' do %>
-    <%= image_tag post.image, alt: post.description, height: '200', class: 'card-img-top post-image' %>
+    <div class="card-img-top text-center bg-dark">
+      <% if post.image.present? %>
+        <%= image_tag post.image, alt: post.description, height: '200', class: 'rounded-top post-image' %>
+      <% end %>
+    </div>
     <div class="card-body d-flex flex-column">
-      <p class="text-secondary flex-grow-1"><%= post.description %></p>
+      <p class="card-text text-secondary flex-grow-1"><%= post.description %></p>
       <div class="d-flex">
         <% if current_page? my_posts_path %>
           <span class="badge <%= post.public ? 'bg-success' : 'bg-primary' %>">

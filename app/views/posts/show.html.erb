@@ -2,11 +2,13 @@
 
 <article class="card col-11 col-md-9 col-lg-7 mx-auto my-2">
   <div class="card-img-top text-center bg-dark">
-    <%= image_tag @post.image, alt: @post.description, class: 'show-post-image rounded-top' %>
+    <% if @post.image.present? %>
+      <%= image_tag @post.image, alt: @post.description, class: 'show-post-image rounded-top' %>
+    <% end %>
   </div>
 
   <div class="card-body d-flex flex-column">
-    <p class="text-secondary flex-grow-1"><%= @post.description %></p>
+    <p class="card-text text-secondary flex-grow-1"><%= @post.description %></p>
     <div class="d-flex">
       <% if post_belongs_to_current_user? %>
           <span class="badge <%= @post.public ? 'bg-success' : 'bg-primary' %>">

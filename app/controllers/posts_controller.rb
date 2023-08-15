@@ -2,20 +2,21 @@ class PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy ]
   before_action :authenticate_user!, except: %i[ index show ]
   before_action :check_post_owner, only: %i[ edit update destroy ]
+  before_action :set_sort_methods, only: %i[ index my_posts ]
 
   # GET /posts or /posts.json
   def index
-    @posts = Post.where(public: true).order(created_at: :desc)
+    @posts = Post.where(public: true).order(selected_sort_method)
   end
 
   def my_posts
-    @posts = Post.where(user_id: current_user.id).order(created_at: :desc)
+    @posts = Post.where(user_id: current_user.id).order(selected_sort_method)
     render :index
   end
 
   # GET /posts/1 or /posts/1.json
   def show
-    @show_page_back_link_path = request.referer == posts_url ? posts_path : my_posts_path
+    @show_page_back_link_path = (URI(request.referer).path.eql? posts_path) ? posts_path : my_posts_path
   end
 
   # GET /posts/new
@@ -80,5 +81,22 @@ class PostsController < ApplicationController
       unless @post.user.eql? current_user
         redirect_to root_path, alert: "You don't have permission to do that."
       end
+    end
+
+    def set_sort_methods
+      @sort_methods = {
+        'Newest first' => { created_at: :desc },
+        'Oldest first' => { created_at: :asc },
+        'Most recently updated' => { updated_at: :desc },
+        'Least recently updated' => { updated_at: :asc }
+      }
+      if request.path === my_posts_path
+        @sort_methods['Private first'] = { public: :asc }
+        @sort_methods['Public first'] = { public: :desc }
+      end
+    end
+
+    def selected_sort_method
+      @sort_methods[params[:sort_by] || 'Newest first']
     end
 end

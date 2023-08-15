@@ -1,7 +1,8 @@
 <div class="container">
   <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start gap-4">
-    <%= link_to root_path, class: 'd-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none' do %>
-      <i class="bi bi-card-image navbar-logo"></i>
+    <%= link_to root_path, class: 'no-format-link border rounded px-1' do %>
+      <%= image_tag 'favicon.png', size: '40' %>
+<!--      <i class="bi bi-card-image navbar-logo"></i>-->
     <% end %>
     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
       <%= navbar_links %>
@@ -17,8 +18,8 @@
         <%= link_to 'Profile', edit_user_registration_path, class: 'btn btn-primary' %>
       </div>
     <% else %>
-      <div class="text-end">
-        <%= link_to 'Log in', new_user_session_path, class: 'btn btn-outline-light me-2' %>
+      <div class="d-flex justify-content-center gap-3">
+        <%= link_to 'Log in', new_user_session_path, class: 'btn btn-outline-light' %>
         <%= link_to 'Sign up', new_user_registration_path, class: 'btn btn-warning' %>
       </div>
     <% end %>

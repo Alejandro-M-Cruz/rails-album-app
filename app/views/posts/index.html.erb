@@ -7,6 +7,11 @@
   </li>
 </ul>
 
+<%= form_with url: request.path, method: :get, class: 'mx-3 mx-sm-5 mb-4 d-flex flex-column flex-sm-row justify-content-end gap-4' do |form| %>
+  <%= form.select :sort_by, @sort_methods, { selected: params[:sort_by] }, { class: 'form-select w-auto' } %>
+  <%= form.submit 'Sort', class: 'btn btn-primary' %>
+<% end %>
+
 <section id="posts" class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-4 mx-1 mx-sm-2 mb-5">
   <% @posts.each do |post| %>
     <%= render post %>

@@ -1,7 +1,10 @@
 import { Controller } from "@hotwired/stimulus"
 
+// Connects to data-controller="alerts"
 export default class extends Controller {
   connect() {
-    this.element.textContent = "Hello World!"
+    setTimeout(() => {
+      this.element.remove()
+    }, 5000)
   }
 }

@@ -22,12 +22,11 @@
     </div>
 
     <% if post.errors.any? %>
-      <div style="color: red">
-        <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
-
-        <ul>
+      <div class="mx-1 mt-3">
+<!--        <h2><%#= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>-->
+        <ul class="list-group list-group-flush">
           <% post.errors.each do |error| %>
-            <li><%= error.full_message %></li>
+            <li class="list-group-item text-danger"><%= error.full_message %></li>
           <% end %>
         </ul>
       </div>

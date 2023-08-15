@@ -20,17 +20,23 @@
 }
 
 .form-card {
-  @extend .card, .mx-auto, .my-2, .col-11, .col-lg-6;
+  @extend .card, .mx-auto, .my-5, .col-11, .col-lg-6;
   max-width: 700px;
 }
 
 .post-image {
-  height: 200px;
-  object-fit: cover;
+  max-width: 100%;
+  object-fit: scale-down;
 }
 
 .show-post-image {
   max-height: 80vh;
   max-width: 100%;
   width: auto;
+}
+
+.alert {
+  @extend .position-absolute, .bottom-0, .start-50, .translate-middle-x, .alert-dismissible, .fade, .show, .mb-5, .col-11, .fw-bold;
+  z-index: 999;
+  max-width: 700px;
 }
