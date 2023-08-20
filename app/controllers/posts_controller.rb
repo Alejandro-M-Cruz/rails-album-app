@@ -16,7 +16,7 @@ class PostsController < ApplicationController
 
   # GET /posts/1 or /posts/1.json
   def show
-    @show_page_back_link_path = (URI(request.referer).path.eql? posts_path) ? posts_path : my_posts_path
+    set_show_page_back_link_path
   end
 
   # GET /posts/new
@@ -66,10 +66,6 @@ class PostsController < ApplicationController
     end
   end
 
-  def toggle_like
-
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
@@ -92,15 +88,21 @@ class PostsController < ApplicationController
         'Newest first' => { created_at: :desc },
         'Oldest first' => { created_at: :asc },
         'Most recently updated' => { updated_at: :desc },
-        'Least recently updated' => { updated_at: :asc }
+        'Least recently updated' => { updated_at: :asc },
+        'Most liked' => { likes_count: :desc },
+        'Least liked' => { likes_count: :asc }
       }
-      if request.path === my_posts_path
-        @sort_methods['Private first'] = { public: :asc }
-        @sort_methods['Public first'] = { public: :desc }
-      end
     end
 
     def selected_sort_method
       @sort_methods[params[:sort_by] || 'Newest first']
+    end
+
+    def set_show_page_back_link_path
+      if request.referer
+        @show_page_back_link_path = URI(request.referer).path == posts_path ? posts_path : my_posts_path
+      else
+        @show_page_back_link_path = :back
+      end
     end
 end

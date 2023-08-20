@@ -13,9 +13,7 @@
 <% end %>
 
 <section id="posts" class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-4 mx-1 mx-sm-2 mb-5">
-  <% @posts.each do |post| %>
-    <%= render post %>
-  <% end %>
+  <%= render partial: 'posts/post', collection: @posts %>
 </section>
 
 <%= link_to new_post_path, class: 'position-fixed bottom-0 end-0 me-2 me-sm-5 mb-2 mb-sm-5 btn btn-primary fs-3' do %>
