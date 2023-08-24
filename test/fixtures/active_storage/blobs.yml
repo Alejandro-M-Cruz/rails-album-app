@@ -1,0 +1,1 @@
+post_image_blob: <%= ActiveStorage::FixtureSet.blob filename: 'post_image.png' %>

@@ -28,13 +28,7 @@ class Posts::LikesController < ApplicationController
 
     def replace_likes_partial
       respond_to do |format|
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.replace(
-            dom_id(@post, :likes),
-            partial: 'posts/likes',
-            locals: { post: @post }
-          )
-        end
+        format.turbo_stream { render turbo_stream: turbo_stream.replace(dom_id(@post, :likes), partial: 'posts/likes', locals: { post: @post }) }
       end
     end
 end

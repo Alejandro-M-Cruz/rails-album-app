@@ -1,0 +1,9 @@
+first_image_attachment:
+  name: image
+  record: one (Post)
+  blob: post_image_blob
+
+second_image_attachment:
+  name: image
+  record: two (Post)
+  blob: post_image_blob

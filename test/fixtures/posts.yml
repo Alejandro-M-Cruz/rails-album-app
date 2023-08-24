@@ -3,7 +3,14 @@
 one:
   description: MyString
   public: false
+  user: one
 
 two:
   description: MyString
-  public: false
+  public: true
+  user: one
+
+post_with_no_likes:
+  description: MyString
+  public: true
+  user: one

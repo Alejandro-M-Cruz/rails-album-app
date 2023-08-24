@@ -4,9 +4,10 @@ class Post < ApplicationRecord
   belongs_to :user
   validates :image, presence: true
   validates :description, length: { maximum: 200 }
+  validates :public, inclusion: { in: [true, false], message: 'must be true or false' }
 
   def liked_by?(user)
-    likes.where(user: user).exists?
+    likes.exists?(user: user)
   end
 
 end
