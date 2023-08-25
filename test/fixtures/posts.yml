@@ -10,6 +10,11 @@ two:
   public: true
   user: one
 
+valid_post:
+  description: MyString
+  public: false
+  user: one
+
 post_with_no_likes:
   description: MyString
   public: true

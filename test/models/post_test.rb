@@ -1,40 +1,44 @@
 require "test_helper"
 
 class PostTest < ActiveSupport::TestCase
+  setup do
+    @post = posts(:valid_post)
+  end
+
   test 'public is initially false' do
     assert_equal false, Post.new.public
   end
 
   test 'error if public is nil' do
-    post = Post.new(public: nil)
-    post.validate
-    assert_not_empty post.errors[:public]
+    @post.public = nil
+    assert_not @post.valid?
+    assert_not_empty @post.errors[:public]
   end
 
   test 'error if user is nil' do
-    post = Post.new(user: nil)
-    post.validate
-    assert_not_empty post.errors[:user]
+    @post.user = nil
+    assert_not @post.valid?
+    assert_not_empty @post.errors[:user]
   end
 
   test 'error if no image is attached' do
-    post = Post.new
-    post.validate
-    assert_not_empty post.errors[:image]
+    @post.image.purge
+    assert_not @post.valid?
+    assert_not_empty @post.errors[:image]
   end
 
   test 'error if description is too long' do
-    post = Post.new(description: generate_string(201))
-    post.validate
-    assert_equal 201, post.description.length
-    assert_not_empty post.errors.where(:description, :too_long)
+    @post.description = generate_string(201)
+    assert_equal 201, @post.description.length
+    assert_not @post.valid?
+    assert_not_empty @post.errors.where(:description, :too_long)
   end
 
   test 'no error if description is 200 characters long' do
-    post = Post.new(description: generate_string(200))
-    post.validate
-    assert_equal 200, post.description.length
-    assert_empty post.errors.where(:description)
+    @post.description = generate_string(200)
+    assert_equal 200, @post.description.length
+    assert @post.valid?
+    assert_empty @post.errors.where(:description)
   end
 
   test 'liked_by? returns false if user has not liked the post' do

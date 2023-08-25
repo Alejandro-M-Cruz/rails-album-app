@@ -7,3 +7,8 @@ second_image_attachment:
   name: image
   record: two (Post)
   blob: post_image_blob
+
+valid_post_image_attachment:
+  name: image
+  record: valid_post (Post)
+  blob: post_image_blob

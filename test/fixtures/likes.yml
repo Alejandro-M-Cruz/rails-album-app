@@ -12,3 +12,7 @@ one:
 two:
   user: one
   likable: two (Post)
+
+valid_like:
+  user: two
+  likable: valid_post (Post)
