@@ -1,0 +1,7 @@
+<%= tag.div id: dom_id(likable, :likes) do %>
+  <%= button_to like_path(likable.class, likable.id), method: :patch, class: 'btn btn-light' do %>
+    <i class="bi bi-hand-thumbs-up<%= likable.liked_by?(current_user) ? '-fill' : '' %>"></i>
+    <%= likable.likes_count %>
+  <% end %>
+<% end %>
+

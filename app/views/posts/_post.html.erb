@@ -17,7 +17,7 @@
         </span>
       <% end %>
       <span class="fw-semibold text-center"><%= post.created_at.strftime '%Y-%m-%d %H:%M' %></span>
-      <%= render partial: 'posts/likes', locals: { post: post } %>
+      <%= render partial: 'likes/likes', locals: { likable: post } %>
     </div>
   </div>
 </article>
