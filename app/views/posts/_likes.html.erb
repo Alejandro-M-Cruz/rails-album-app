@@ -1,4 +1,4 @@
-<%= tag.div id: dom_id(post, :links) do %>
+<%= tag.div id: dom_id(post, :likes) do %>
   <%= button_to post_like_path(post), method: :patch, class: 'btn btn-light' do %>
     <i class="bi bi-hand-thumbs-up<%= post.liked_by?(current_user) ? '-fill' : '' %>"></i>
     <%= post.likes_count %>

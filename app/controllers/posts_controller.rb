@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy ]
   before_action :authenticate_user!, except: %i[ index show ]
   before_action :check_post_owner, only: %i[ edit update destroy ]
-  before_action :set_sort_methods, only: %i[ index my_posts ]
+  before_action :set_sort_methods, only: %i[ index my_posts liked_posts ]
 
   # GET /posts or /posts.json
   def index
@@ -10,13 +10,18 @@ class PostsController < ApplicationController
   end
 
   def my_posts
-    @posts = Post.where(user_id: current_user.id).order(selected_sort_method)
+    @posts = Post.where(user: current_user).order(selected_sort_method)
+    render :index
+  end
+
+  def liked_posts
+    @posts = current_user.likes.where(likable_type: 'Post').map(&:likable)
     render :index
   end
 
   # GET /posts/1 or /posts/1.json
   def show
-    set_show_page_back_link_path
+    set_back_link_path
   end
 
   # GET /posts/new
@@ -61,7 +66,7 @@ class PostsController < ApplicationController
     @post.destroy
 
     respond_to do |format|
-      format.html { redirect_to posts_url, notice: "Post was successfully destroyed." }
+      format.html { redirect_to my_posts_path , notice: "Post was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -95,14 +100,14 @@ class PostsController < ApplicationController
     end
 
     def selected_sort_method
-      @sort_methods[params[:sort_by] || 'Newest first']
+      @sort_methods[params[:sort_by] || 'Newest first'] || @sort_methods['Newest first']
     end
 
-    def set_show_page_back_link_path
+    def set_back_link_path
       if request.referer
-        @show_page_back_link_path = URI(request.referer).path == posts_path ? posts_path : my_posts_path
+        @back_link_path = URI(request.referer).path == posts_path ? posts_path : my_posts_path
       else
-        @show_page_back_link_path = :back
+        @back_link_path = :back
       end
     end
 end

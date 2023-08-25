@@ -4,11 +4,7 @@ class Posts::LikesController < ApplicationController
   before_action :set_post
 
   def update
-    if @post.liked_by? current_user
-      destroy_post_like
-    else
-      like_post
-    end
+    @post.liked_by?(current_user) ? destroy_post_like : like_post
     replace_likes_partial
   end
 
@@ -19,7 +15,7 @@ class Posts::LikesController < ApplicationController
     end
 
     def like_post
-      @post.likes.create user: current_user
+      @post.likes.create(user: current_user)
     end
 
     def destroy_post_like
@@ -28,7 +24,13 @@ class Posts::LikesController < ApplicationController
 
     def replace_likes_partial
       respond_to do |format|
-        format.turbo_stream { render turbo_stream: turbo_stream.replace(dom_id(@post, :likes), partial: 'posts/likes', locals: { post: @post }) }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(
+            dom_id(@post, :likes),
+            partial: 'posts/likes',
+            locals: { post: @post }
+          )
+        end
       end
     end
 end
