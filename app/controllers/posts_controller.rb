@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_likable, only: %i[ show edit update destroy ]
+  before_action :set_post, only: %i[ show edit update destroy ]
   before_action :authenticate_user!, except: %i[ index show ]
   before_action :check_post_owner, only: %i[ edit update destroy ]
   before_action :set_sort_methods, only: %i[ index my_posts liked_posts ]

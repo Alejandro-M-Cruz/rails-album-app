@@ -6,8 +6,9 @@ class Post < ApplicationRecord
   validates :description, length: { maximum: 200 }
   validates :public, inclusion: { in: [true, false], message: 'must be true or false' }
 
+  # after_update_commit :broadcast_update
+
   def liked_by?(user)
     likes.exists?(user: user)
   end
-
 end
