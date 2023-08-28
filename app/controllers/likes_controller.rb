@@ -10,7 +10,9 @@ class LikesController < ApplicationController
 
   private
     def set_likable
-      @likable = params[:likable_type].constantize.find(params[:likable_id])
+      params.each_pair do |param_name, param_value|
+        @likable = $1&.classify&.constantize&.find(param_value) if param_name =~ /(.+)_id$/
+      end
     end
 
     def like
