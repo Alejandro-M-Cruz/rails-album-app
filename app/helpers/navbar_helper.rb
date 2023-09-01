@@ -3,7 +3,7 @@ module NavbarHelper
   def navbar_links
     navbar_links = [
       { name: 'Posts', path: posts_path },
-      { name: 'My posts', path: my_posts_path },
+      { name: 'My posts', path: posts_path(:my_posts) },
       { name: 'New post', path: new_post_path }
     ]
     navbar_links.map { |link| link_html(link) }.join.html_safe

@@ -1,27 +1,26 @@
 class PostsController < ApplicationController
+  before_action :set_tabs, only: :index
+  before_action :set_sort_methods, only: :index
+  before_action :set_tab, only: :index
   before_action :set_post, only: %i[ show edit update destroy ]
   before_action :authenticate_user!, except: %i[ index show ]
   before_action :check_post_owner, only: %i[ edit update destroy ]
-  before_action :set_sort_methods, only: %i[ index my_posts liked_posts ]
 
   # GET /posts or /posts.json
   def index
-    @posts = Post.where(public: true).order(selected_sort_method)
-  end
-
-  def my_posts
-    @posts = Post.where(user: current_user).order(selected_sort_method)
-    render :index
-  end
-
-  def liked_posts
-    @posts = current_user.likes.where(likable_type: 'Post').map(&:likable)
-    render :index
+    case @tab
+    when :my_posts
+      @posts = Post.where(user: current_user).order(selected_sort_method)
+    when :liked_posts
+      @posts = current_user.likes.where(likable_type: 'Post').map(&:likable)
+    else
+      @tab = :all_posts unless @tab
+      @posts = Post.where(public: true).order(selected_sort_method)
+    end
   end
 
   # GET /posts/1 or /posts/1.json
   def show
-    set_back_link_path
   end
 
   # GET /posts/new
@@ -66,7 +65,7 @@ class PostsController < ApplicationController
     @post.destroy
 
     respond_to do |format|
-      format.html { redirect_to my_posts_path , notice: "Post was successfully destroyed." }
+      format.html { redirect_to posts_path, notice: "Post was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -75,6 +74,18 @@ class PostsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_post
       @post = Post.find(params[:id])
+    end
+
+    def set_tabs
+      @tabs = {
+        all_posts: 'All posts',
+        my_posts: 'My posts',
+        liked_posts: 'Liked posts'
+      }
+    end
+
+    def set_tab
+      @tab = params[:tab].to_sym if params[:tab]
     end
 
     # Only allow a list of trusted parameters through.
@@ -103,11 +114,4 @@ class PostsController < ApplicationController
       @sort_methods[params[:sort_by] || 'Newest first'] || @sort_methods['Newest first']
     end
 
-    def set_back_link_path
-      if request.referer
-        @back_link_path = URI(request.referer).path == posts_path ? posts_path : my_posts_path
-      else
-        @back_link_path = :back
-      end
-    end
 end

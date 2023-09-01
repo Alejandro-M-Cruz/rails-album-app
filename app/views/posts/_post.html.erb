@@ -11,7 +11,7 @@
       </div>
     <% end %>
     <div class="card-footer d-flex justify-content-between align-items-center">
-      <% if current_page? my_posts_path %>
+      <% if @tab.eql? :my_posts %>
         <span class="me-2 badge <%= post.public ? 'bg-success' : 'bg-primary' %>">
           <%= post.public ? 'Public' : 'Private' %>
         </span>

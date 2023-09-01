@@ -1,13 +1,9 @@
 <ul class="nav nav-tabs justify-content-center my-4">
-  <li class="nav-item">
-    <%= link_to 'All posts', posts_path, class: 'px-4 nav-link' + (current_page?(posts_path) ? ' active' : '') %>
-  </li>
-  <li class="nav-item">
-    <%= link_to 'My posts', my_posts_path, class: 'px-4 nav-link' + (current_page?(my_posts_path) ? ' active' : '') %>
-  </li>
-  <li class="nav-item">
-    <%= link_to 'Liked posts', liked_posts_path, class: 'px-4 nav-link' + (current_page?(liked_posts_path) ? ' active' : '') %>
-  </li>
+  <% @tabs.each_pair do |tab, tab_name| %>
+    <li class="nav-item">
+      <%= link_to tab_name, posts_path(tab: tab.to_s), class: 'px-4 nav-link' + (@tab.eql?(tab) ? ' active' : '') %>
+    </li>
+  <% end %>
 </ul>
 
 <%= form_with url: request.path, method: :get, class: 'mx-3 mx-sm-5 mb-4 d-flex flex-column flex-sm-row justify-content-end gap-4' do |form| %>
