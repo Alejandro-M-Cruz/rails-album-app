@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-user = User.find_by! email: 'alejandroxdlx@gmail.com'
+user = User.first
 
 10.times do |i|
   post = Post.new(

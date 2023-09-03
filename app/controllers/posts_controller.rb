@@ -1,8 +1,8 @@
 class PostsController < ApplicationController
-  before_action :set_tabs, only: :index
-  before_action :set_sort_methods, only: :index
   before_action :set_tab, only: :index
   before_action :set_post, only: %i[ show edit update destroy ]
+  before_action :set_sort_method, only: :index
+  before_action :set_post_comments, only: :show
   before_action :authenticate_user!, except: %i[ index show ]
   before_action :check_post_owner, only: %i[ edit update destroy ]
 
@@ -10,12 +10,14 @@ class PostsController < ApplicationController
   def index
     case @tab
     when :my_posts
-      @posts = Post.where(user: current_user).order(selected_sort_method)
+      authenticate_user!
+      @posts = Post.where(user: current_user).order(set_sort_method)
     when :liked_posts
+      authenticate_user!
       @posts = current_user.likes.where(likable_type: 'Post').map(&:likable)
     else
       @tab = :all_posts unless @tab
-      @posts = Post.where(public: true).order(selected_sort_method)
+      @posts = Post.where(public: true).order(set_sort_method)
     end
   end
 
@@ -75,17 +77,13 @@ class PostsController < ApplicationController
     def set_post
       @post = Post.find(params[:id])
     end
-
-    def set_tabs
-      @tabs = {
-        all_posts: 'All posts',
-        my_posts: 'My posts',
-        liked_posts: 'Liked posts'
-      }
+    
+    def set_post_comments
+      @comments = @post.comments.all
     end
-
+    
     def set_tab
-      @tab = params[:tab].to_sym if params[:tab]
+      @tab = params[:tab]&.to_sym
     end
 
     # Only allow a list of trusted parameters through.
@@ -99,19 +97,8 @@ class PostsController < ApplicationController
       end
     end
 
-    def set_sort_methods
-      @sort_methods = {
-        'Newest first' => { created_at: :desc },
-        'Oldest first' => { created_at: :asc },
-        'Most recently updated' => { updated_at: :desc },
-        'Least recently updated' => { updated_at: :asc },
-        'Most liked' => { likes_count: :desc },
-        'Least liked' => { likes_count: :asc }
-      }
-    end
-
-    def selected_sort_method
-      @sort_methods[params[:sort_by] || 'Newest first'] || @sort_methods['Newest first']
+    def set_sort_method
+      Post::SORT_METHODS[params[:sort_by] || 'Newest first'] || Post.SORT_METHODS['Newest first']
     end
 
 end
