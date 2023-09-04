@@ -1,7 +1,7 @@
-<div class="card-header">
+<div class="card-header text-center text-semibold">
   <% if comment.updated_at.eql? comment.created_at %>
-    <span class="fw-semibold text-center"><%= comment.created_at.strftime '%Y-%m-%d %H:%M' %></span>
+    <span class="card-title fw-semibold"><%= comment.created_at.strftime '%Y-%m-%d %H:%M' %></span>
   <% else %>
-    <span class="fw-semibold text-center"><%= comment.updated_at.strftime '%Y-%m-%d %H:%M' %> (Updated)</span>
+    <span class="card-title fw-semibold"><%= comment.updated_at.strftime '%Y-%m-%d %H:%M' %> (Updated)</span>
   <% end %>
 </div>

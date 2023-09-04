@@ -22,11 +22,11 @@
 
   <% if @post.user.eql? current_user %>
     <div class="card-footer d-flex justify-content-around">
+      <%= button_to @post, method: :delete, class: 'btn btn-outline-danger' do %>
+        <i class="bi bi-trash-fill"></i> Destroy
+      <% end %>
       <%= link_to edit_post_path(@post), class: 'btn btn-primary' do %>
         <i class="bi bi-pencil-fill"></i> Edit
-      <% end %>
-      <%= button_to @post, method: :delete, class: 'btn btn-danger' do %>
-        <i class="bi bi-trash-fill"></i> Destroy
       <% end %>
     </div>
   <% end %>

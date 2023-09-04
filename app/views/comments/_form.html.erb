@@ -1,15 +1,15 @@
 <%= form_with(model: [commentable, comment], html: { class: 'form-card' }) do |form| %>
   <% if comment.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
-
-      <ul>
+    <div class="mx-1 mt-3">
+      <!--        <h2><%#= pluralize(comment.errors.count, "error") %> prohibited this post from being saved:</h2>-->
+      <ul class="list-group list-group-flush">
         <% comment.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+          <li class="list-group-item text-danger"><%= error.full_message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
+
   <% if comment.persisted? %>
     <%= render partial: 'comments/timestamps', locals: { comment: comment } %>
   <% end %>
@@ -18,7 +18,10 @@
     <%= form.text_area :body, class: 'form-control mt-2', rows: 2, placeholder: 'Write your comment here...' %>
   </div>
 
-  <div class="card-footer d-flex justify-content-end">
+  <div class="card-footer d-flex flex-column flex-sm-row justify-content-around gap-2">
+    <%# if comment.persisted? %>
+      <%= button_to 'Delete comment', polymorphic_path([commentable, comment]), method: :delete, class: 'btn btn-outline-danger' %>
+    <%# end %>
     <%= form.submit 'Confirm', class: 'btn btn-primary' %>
   </div>
 <% end %>

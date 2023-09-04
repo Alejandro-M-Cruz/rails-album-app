@@ -1,20 +1,9 @@
 <div id="<%= dom_id comment %>" class="comment-card">
 
-  <%#= render partial: 'comments/timestamps', locals: { comment: comment } %>
+  <%= render partial: 'comments/timestamps', locals: { comment: comment } %>
 
-  <p>
-    <strong>User:</strong>
-    <%= comment.user_id %>
-  </p>
-
-  <p>
-    <strong>Commentable:</strong>
-    <%= comment.commentable_id %>
-  </p>
-
-  <p>
-    <strong>Body:</strong>
-    <%= comment.body %>
-  </p>
+  <div class="card-body">
+    <p class="card-text text-secondary"><%= comment.body %></p>
+  </div>
 
 </div>

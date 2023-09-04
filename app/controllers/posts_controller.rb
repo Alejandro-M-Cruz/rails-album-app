@@ -79,7 +79,7 @@ class PostsController < ApplicationController
     end
     
     def set_post_comments
-      @comments = @post.comments.all
+      @comments = @post.comments
     end
     
     def set_tab

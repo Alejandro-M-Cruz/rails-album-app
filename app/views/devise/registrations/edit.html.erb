@@ -62,7 +62,7 @@
     <div class="card-footer d-flex justify-content-center">
       <%=
         button_to(
-          "Cancel my account",
+          'Cancel my account',
           registration_path(resource_name),
           data: { confirm: "Are you sure?", turbo_confirm: "Are you sure that you want to cancel your account?" },
           method: :delete,
