@@ -1,6 +1,8 @@
 module CommentsHelper
-  def comment_form_partial_locals(commentable)
-    comment = commentable.comments.find_by(user: current_user)
+
+
+  def comment_form_partial_locals(commentable, user)
+    comment = commentable.comments.find_by(user: user)
     {
       commentable: commentable,
       comment: comment || commentable.comments.new

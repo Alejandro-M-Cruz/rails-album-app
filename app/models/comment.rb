@@ -1,8 +1,8 @@
 class Comment < ApplicationRecord
   belongs_to :user
   belongs_to :commentable, polymorphic: true
-  validate :user_commented?, on: :create
   validates :body, presence: true
+  validate :user_commented?, on: :create
 
   private
     def user_commented?

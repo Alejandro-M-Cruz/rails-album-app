@@ -5,7 +5,7 @@ class LikesController < ApplicationController
 
   def update
     @likable.liked_by?(current_user) ? destroy_like : like
-    replace_likes_partial
+    refresh_likes_view
   end
 
   private
@@ -23,7 +23,7 @@ class LikesController < ApplicationController
       @likable.likes.where(user: current_user).destroy_all
     end
 
-    def replace_likes_partial
+    def refresh_likes_view
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: turbo_stream.replace(
