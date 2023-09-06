@@ -6,25 +6,28 @@ class CommentsController < ApplicationController
   before_action :check_comment_owner, only: %i[ update destroy ]
   before_action :set_commentable, only: %i[ create update destroy ]
   before_action :check_commentable_visibility, only: %i[ update destroy ]
-  after_action :refresh_comments_section, only: %i[ destroy ]
+  # after_action :refresh_comments_section, only: %i[ create update destroy ]
 
   # POST /comments or /comments.json
   def create
     @comment = @commentable.comments.new(**comment_params, user: current_user)
-    @comment.save
-    flash.notice = 'Comment successfully created'
+    if @comment.save
+      flash.notice = 'Comment successfully created'
+    end
   end
 
   # PATCH/PUT /comments/1 or /comments/1.json
   def update
-    @comment.update(comment_params)
-    flash.notice = 'Comment successfully updated'
+    if @comment.update(comment_params)
+      flash.notice = 'Comment successfully updated'
+    end
   end
 
   # DELETE /comments/1 or /comments/1.json
   def destroy
-    @comment.destroy
-    flash.notice = 'Comment successfully deleted'
+    if @comment.destroy
+      flash.notice = 'Comment successfully deleted'
+    end
   end
 
   private

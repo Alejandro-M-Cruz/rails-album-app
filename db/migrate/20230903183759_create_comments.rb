@@ -1,6 +1,4 @@
 class CreateComments < ActiveRecord::Migration[7.0]
-  drop_table :comments
-
   def change
     create_table :comments do |t|
       t.belongs_to :user, null: false, foreign_key: true

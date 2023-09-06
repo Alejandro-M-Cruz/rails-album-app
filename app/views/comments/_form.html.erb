@@ -20,8 +20,13 @@
 
   <div class="card-footer d-flex flex-column flex-sm-row justify-content-around gap-2">
     <% if comment.persisted? %>
-      <%= form.button 'Delete comment', formmethod: :delete, class: 'btn btn-danger' %>
+      <%= tag.button 'Delete comment', type: 'submit', form: dom_id(comment, :delete), class: 'btn btn-danger' %>
     <% end %>
     <%= form.submit 'Confirm', class: 'btn btn-primary' %>
   </div>
+<% end %>
+
+
+<% if comment.persisted? %>
+  <%= form_with(model: [commentable, comment], method: :delete, id: dom_id(comment, :delete)) %>
 <% end %>
