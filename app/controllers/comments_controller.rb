@@ -6,27 +6,32 @@ class CommentsController < ApplicationController
   before_action :check_comment_owner, only: %i[ update destroy ]
   before_action :set_commentable, only: %i[ create update destroy ]
   before_action :check_commentable_visibility, only: %i[ update destroy ]
-  # after_action :refresh_comments_section, only: %i[ create update destroy ]
 
   # POST /comments or /comments.json
   def create
     @comment = @commentable.comments.new(**comment_params, user: current_user)
     if @comment.save
-      flash.notice = 'Comment successfully created'
+      redirect_to @commentable, notice: 'Comment successfully created'
+    else
+      refresh_comment_form
     end
   end
 
   # PATCH/PUT /comments/1 or /comments/1.json
   def update
     if @comment.update(comment_params)
-      flash.notice = 'Comment successfully updated'
+      redirect_to @commentable, notice: 'Comment successfully updated'
+    else
+      refresh_comment_form
     end
   end
 
   # DELETE /comments/1 or /comments/1.json
   def destroy
     if @comment.destroy
-      flash.notice = 'Comment successfully deleted'
+      redirect_to @commentable, notice: 'Comment successfully deleted'
+    else
+      refresh_comment_form
     end
   end
 
@@ -38,9 +43,7 @@ class CommentsController < ApplicationController
 
     def commentable_from_id_param
       params.each_pair do |param_name, param_value|
-        if param_name =~ /(.+)_id$/
-          return $1&.classify&.constantize&.find(param_value)
-        end
+        return $1&.classify&.constantize&.find(param_value) if param_name =~ /(.+)_id$/
       end
     end
 
@@ -65,13 +68,13 @@ class CommentsController < ApplicationController
       params.require(:comment).permit(:commentable_id, :body)
     end
 
-    def refresh_comments_section
+    def refresh_comment_form
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: turbo_stream.replace(
-            dom_id(@commentable, :comments),
-            partial: 'comments/comments',
-            locals: { commentable: @commentable }
+            dom_id(@comment, :form),
+            partial: 'comments/form',
+            locals: { comment: @comment, commentable: @commentable }
           )
         end
       end

@@ -1,5 +1,5 @@
 <section id="<%= dom_id(commentable, :comments) %>">
-  <h3>Comments</h3>
+  <h3 class="text-center" style="margin-top: 70px">Comments</h3>
   <%= render partial: 'comments/form', locals: comment_form_partial_locals(commentable, current_user) %>
   <%= render partial: 'comments/comment', collection: commentable.comments.where.not(user: current_user).persisted %>
 </section>

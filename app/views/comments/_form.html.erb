@@ -1,21 +1,21 @@
-<%= form_with(model: [commentable, comment], class: 'form-card') do |form| %>
-  <% if comment.errors.any? %>
-    <div class="mx-1 mt-3">
-      <!--        <h2><%#= pluralize(comment.errors.count, "error") %> prohibited this post from being saved:</h2>-->
-      <ul class="list-group list-group-flush">
-        <% comment.errors.each do |error| %>
-          <li class="list-group-item text-danger"><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
+<%= form_with(model: [commentable, comment], class: 'form-card', id: dom_id(comment, :form)) do |form| %>
   <% if comment.persisted? %>
     <%= render partial: 'comments/timestamps', locals: { comment: comment } %>
   <% end %>
 
   <div class="card-body">
     <%= form.text_area :body, class: 'form-control mt-2', rows: 2, placeholder: 'Write your comment here...' %>
+
+    <% if comment.errors.any? %>
+      <div class="mx-1 mt-3">
+        <!--        <h2><%#= pluralize(comment.errors.count, "error") %> prohibited this post from being saved:</h2>-->
+        <ul class="list-group list-group-flush">
+          <% comment.errors.each do |error| %>
+            <li class="list-group-item text-danger"><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
   </div>
 
   <div class="card-footer d-flex flex-column flex-sm-row justify-content-around gap-2">
