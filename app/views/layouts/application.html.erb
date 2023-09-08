@@ -15,11 +15,13 @@
     <header class="p-3 text-bg-dark">
       <%= render 'shared/navbar' %>
     </header>
-    <% if notice %>
-      <%= render 'shared/notice' %>
-    <% end %>
+    <div id="flash-notice-container">
+      <%= render 'shared/flash/notice' %>
+    </div>
+    <div id="flash-alert-container">
+      <%= render 'shared/flash/alert' %>
+    </div>
     <% if alert %>
-      <%= render 'shared/alert' %>
     <% end %>
     <main>
       <%= yield %>
